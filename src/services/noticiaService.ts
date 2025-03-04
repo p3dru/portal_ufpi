@@ -42,7 +42,7 @@ export const noticiaService = {
   },
 
   update: async (id: number, noticia: FormData): Promise<NoticiaDto> => {
-    const response = await axiosInstance.put(`/${id}`, noticia)
+    const response = await axiosInstance.patch(`/${id}`, noticia)
     return response.data
   },
 

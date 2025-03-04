@@ -1,5 +1,6 @@
 import axios from "axios"
 import type { DissertacaoTeseDto, CreateDissertacaoTeseDto, UpdateDissertacaoTeseDto } from "../types/dissertacaoTese"
+import { authService } from "./authService"
 
 //const API_URL = "http://localhost:3000"
 const API_URL = import.meta.env.VITE_API_URL
@@ -10,6 +11,19 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 })
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = authService.getAccessToken()
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
 
 export const dissertacaoTeseService = {
   // Obtém todas as dissertações e teses do banco de dados
@@ -32,7 +46,7 @@ export const dissertacaoTeseService = {
 
   // Atualiza uma dissertação ou tese existente no banco de dados
   update: async (id: number, dissertacaoTese: UpdateDissertacaoTeseDto): Promise<DissertacaoTeseDto> => {
-    const response = await axiosInstance.put(`/dissertacoes-teses/${id}`, dissertacaoTese)
+    const response = await axiosInstance.patch(`/dissertacoes-teses/${id}`, dissertacaoTese)
     return response.data
   },
 
