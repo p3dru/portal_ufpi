@@ -15,6 +15,7 @@ const DissertacaoTeseForm: React.FC<DissertacaoTeseFormProps> = ({ isEditing }) 
   const [formData, setFormData] = useState<CreateDissertacaoTeseDto | UpdateDissertacaoTeseDto>({
     nome_autor: "",
     titulo: "",
+    arquivo: undefined,
     orientador: "",
     data: "",
     resumo: "",
@@ -47,9 +48,9 @@ const DissertacaoTeseForm: React.FC<DissertacaoTeseFormProps> = ({ isEditing }) 
     e.preventDefault()
     try {
       if (isEditing && id) {
-        await dissertacaoTeseService.update(Number.parseInt(id), formData as UpdateDissertacaoTeseDto)
+        //await dissertacaoTeseService.update(Number.parseInt(id), formData as UpdateDissertacaoTeseDto)
       } else {
-        await dissertacaoTeseService.create(formData as CreateDissertacaoTeseDto)
+        //await dissertacaoTeseService.create(formData as CreateDissertacaoTeseDto)
       }
       navigate("/dissertacao-tese/list")
     } catch (error) {

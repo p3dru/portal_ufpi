@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { DissertacaoTeseDto, CreateDissertacaoTeseDto, UpdateDissertacaoTeseDto } from "../types/dissertacaoTese"
+import type { DissertacaoTeseDto } from "../types/dissertacaoTese"
 import { authService } from "./authService"
 
 //const API_URL = "http://localhost:3000"
@@ -39,14 +39,22 @@ export const dissertacaoTeseService = {
   },
 
   // Cria uma nova dissertação ou tese no banco de dados
-  create: async (dissertacaoTese: CreateDissertacaoTeseDto): Promise<DissertacaoTeseDto> => {
-    const response = await axiosInstance.post("/dissertacoes-teses", dissertacaoTese)
+  create: async (formData: FormData): Promise<DissertacaoTeseDto> => {
+    const response = await axiosInstance.post("/dissertacoes-teses", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
     return response.data
   },
 
   // Atualiza uma dissertação ou tese existente no banco de dados
-  update: async (id: number, dissertacaoTese: UpdateDissertacaoTeseDto): Promise<DissertacaoTeseDto> => {
-    const response = await axiosInstance.patch(`/dissertacoes-teses/${id}`, dissertacaoTese)
+  update: async (id: number, formData: FormData): Promise<DissertacaoTeseDto> => {
+    const response = await axiosInstance.patch(`/dissertacoes-teses/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
     return response.data
   },
 
@@ -54,5 +62,12 @@ export const dissertacaoTeseService = {
   delete: async (id: number): Promise<void> => {
     await axiosInstance.delete(`/dissertacoes-teses/${id}`)
   },
+
+  downloadArquivo: async (id: number): Promise<Blob> => {
+    const response = await axiosInstance.get(`/dissertacoes-teses/${id}/download`, {
+      responseType: "blob",
+    })
+    return response.data
+  }
 }
 

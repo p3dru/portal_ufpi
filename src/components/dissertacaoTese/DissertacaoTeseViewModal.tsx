@@ -33,6 +33,15 @@ const DissertacaoTeseViewModal: React.FC<DissertacaoTeseViewModalProps> = ({ isO
           <p>
             <strong>{t("theses.summarize")}:</strong> {dissertacaoTese.resumo}
           </p>
+          {dissertacaoTese.arquivo && (
+            <div>
+              <button>
+              <a href={`${import.meta.env.VITE_API_URL}/dissertacoes-teses/${dissertacaoTese.id}/download`} download>
+                Baixar Arquivo
+              </a>
+              </button>
+            </div>
+          )}
         </div>
         <div className="modal-buttons">
           <button onClick={onClose}>{t("theses.close")}</button>

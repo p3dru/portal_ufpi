@@ -26,16 +26,19 @@ const DissertacaoTeseFormModal: React.FC<DissertacaoTeseFormModalProps> = ({
   const [formData, setFormData] = useState<CreateDissertacaoTeseDto | UpdateDissertacaoTeseDto>({
     nome_autor: "",
     titulo: "",
+    arquivo: undefined,
     orientador: "",
     data: "",
     resumo: "",
   })
+  const [file, setFile] = useState<File | null>(null)
 
   useEffect(() => {
     if (dissertacaoTese) {
       setFormData({
         nome_autor: dissertacaoTese.nome_autor,
         titulo: dissertacaoTese.titulo,
+        arquivo: dissertacaoTese.arquivo,
         orientador: dissertacaoTese.orientador,
         data: dissertacaoTese.data,
         resumo: dissertacaoTese.resumo,
@@ -44,6 +47,7 @@ const DissertacaoTeseFormModal: React.FC<DissertacaoTeseFormModalProps> = ({
       setFormData({
         nome_autor: "",
         titulo: "",
+        arquivo: undefined,
         orientador: "",
         data: "",
         resumo: "",
@@ -56,13 +60,31 @@ const DissertacaoTeseFormModal: React.FC<DissertacaoTeseFormModalProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]){
+      setFile(e.target.files[0])
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
+      const formDataToSend = new FormData()
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== undefined) {
+          formDataToSend.append(key, String(value))
+        }        
+      })
+
+      if (file) {
+        formDataToSend.append("arquivo", file)
+        console.log("Arquivo anexado: ", file)
+      }
+
       if (dissertacaoTese) {
-        await dissertacaoTeseService.update(dissertacaoTese.id, formData as UpdateDissertacaoTeseDto)
+        await dissertacaoTeseService.update(dissertacaoTese.id, formDataToSend)
       } else {
-        await dissertacaoTeseService.create(formData as CreateDissertacaoTeseDto)
+        await dissertacaoTeseService.create(formDataToSend)
       }
       onSubmitSuccess()
       onClose()
@@ -111,6 +133,10 @@ const DissertacaoTeseFormModal: React.FC<DissertacaoTeseFormModalProps> = ({
           <div>
             <label htmlFor="resumo">Resumo:</label>
             <textarea id="resumo" name="resumo" value={formData.resumo} onChange={handleChange} required />
+          </div>
+          <div>
+            <label htmlFor="arquivo">Arquivo</label>
+            <input type="file" id="arquivo" name="arquivo" onChange={handleFileChange}/>
           </div>
           <div className="modal-buttons">
             <button type="button" onClick={onClose}>

@@ -42,7 +42,7 @@ import type { CursoResponseDto, CreateCursoDto, UpdateCursoDto } from "./types/c
 import type { DocumentoResponseDto, CreateDocumentoDto, UpdateDocumentoDto } from "./types/documento"
 //import type { GradeCurricularDto, CreateGradeCurricularDto, UpdateGradeCurricularDto } from "./types/gradeCurricular"
 import type { TurmaDto, CreateTurmaDto, UpdateTurmaDto } from "./types/turma"
-import type { DissertacaoTeseDto, CreateDissertacaoTeseDto, UpdateDissertacaoTeseDto } from "./types/dissertacaoTese"
+//import type { DissertacaoTeseDto, CreateDissertacaoTeseDto, UpdateDissertacaoTeseDto } from "./types/dissertacaoTese"
 import type { CalendarioDto, CreateCalendarioDto, UpdateCalendarioDto } from "./types/calendario"
 import type {
   ProcessoSeletivoDto,
@@ -59,7 +59,7 @@ import { cursoService } from "./services/cursoService"
 import { documentoService } from "./services/documentoService"
 //import { gradeCurricularService } from "./services/gradeCurricularService"
 import { turmaService } from "./services/turmaService"
-import { dissertacaoTeseService } from "./services/dissertacaoTeseService"
+//import { dissertacaoTeseService } from "./services/dissertacaoTeseService"
 import { calendarioService } from "./services/calendarioService"
 import { processoSeletivoService } from "./services/processoSeletivoService"
 import AdminAdministradores from "./pages/admin/administradores/AdminAdministradores"
@@ -406,6 +406,7 @@ function App() {
                       />
                     }
                   />
+                  {/*
                   <Route
                     path="/dissertacoes-teses"
                     element={
@@ -423,6 +424,7 @@ function App() {
                       />
                     }
                   />
+                  */}
                   <Route
                     path="/calendarios"
                     element={

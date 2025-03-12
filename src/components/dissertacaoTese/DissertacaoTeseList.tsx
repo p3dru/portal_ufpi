@@ -81,6 +81,13 @@ const DissertacaoTeseList: React.FC = () => {
                 <td>{item.orientador}</td>
                 <td>{new Date(item.data).toLocaleDateString()}</td>
                 <td>
+                  {item.arquivo && (
+                    <a href={`${import.meta.env.VITE_API_URL}/dissertacoes-teses/${item.id}/download`} download>
+                      Baixar
+                    </a>
+                  )}
+                </td>
+                <td>
                   <button onClick={() => openViewModal(item)} className="btn-view">
                   {t("theses.seeMore")}
                   </button>
