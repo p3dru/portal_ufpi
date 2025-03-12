@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiOperation, ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional, IsDateString } from 'class-validator';
 
 export class CreateDissertacaoTeseDto {
@@ -11,6 +11,10 @@ export class CreateDissertacaoTeseDto {
   @IsString()
   @IsNotEmpty()
   titulo: string;
+
+  @ApiProperty({ description: 'Documento anexo', type: 'string', format: 'binary', required: false })
+  @IsOptional()
+  arquivo?: any;
 
   @ApiProperty({ description: 'Nome do orientador' })
   @IsString()

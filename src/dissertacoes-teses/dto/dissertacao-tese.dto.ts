@@ -10,11 +10,14 @@ export class DissertacaoTeseDto {
   @ApiProperty({ description: 'Título da dissertação ou tese' })
   titulo: string;
 
+  @ApiProperty({ description: 'Documento anexo', type: 'string', format: 'binary', required: false })
+  arquivo?: string;
+
   @ApiProperty({ description: 'Nome do orientador' })
   orientador: string;
 
   @ApiProperty({ description: 'Data de publicação', example: '2025-01-30T00:00:00.000Z' })
-  data: string;
+  data: Date;
 
   @ApiProperty({ description: 'Resumo da dissertação ou tese' })
   resumo: string;

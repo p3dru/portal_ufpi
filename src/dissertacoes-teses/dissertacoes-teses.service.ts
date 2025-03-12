@@ -18,6 +18,15 @@ export class DissertacoesTesesService {
     return this.dissertacaoTeseRepository.save(dissertacaoTese);
   }
 
+  async downloadDocumento(id:number): Promise<DissertacaoTese>{
+    const documento = await this.dissertacaoTeseRepository.findOne({where: { id }});
+    if (!documento) {
+      throw new NotFoundException(`Documento com id ${id} não encontrado`);
+    }
+
+    return documento;
+  }
+
   async findAll(): Promise<DissertacaoTese[]> {
     return this.dissertacaoTeseRepository.find();
   }

@@ -14,6 +14,10 @@ export class UpdateDissertacaoTeseDto extends PartialType(CreateDissertacaoTeseD
   @IsString()
   titulo?: string;
 
+  @ApiProperty({ description: 'Documento anexo', type: 'string', required: false })
+  @IsOptional()
+  arquivo?: string;
+
   @ApiProperty({ description: 'Nome do orientador', required: false })
   @IsOptional()
   @IsString()

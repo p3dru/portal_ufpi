@@ -11,6 +11,9 @@ export class DissertacaoTese {
   @Column({ type: 'varchar', length: 255 })
   titulo: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  arquivo: string;
+
   @Column({ type: 'varchar', length: 255 })
   orientador: string;
 
