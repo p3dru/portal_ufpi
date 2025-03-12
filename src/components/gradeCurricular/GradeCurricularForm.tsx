@@ -62,9 +62,9 @@ const GradeCurricularForm: React.FC<GradeCurricularFormProps> = ({ isEditing }) 
     e.preventDefault()
     try {
       if (isEditing && id) {
-        await gradeCurricularService.update(Number.parseInt(id), formData as UpdateGradeCurricularDto)
+        //await gradeCurricularService.update(Number.parseInt(id), formData as UpdateGradeCurricularDto)
       } else {
-        await gradeCurricularService.create(formData as CreateGradeCurricularDto)
+        //await gradeCurricularService.create(formData as CreateGradeCurricularDto)
       }
       navigate("/grade-curricular/list")
     } catch (error) {

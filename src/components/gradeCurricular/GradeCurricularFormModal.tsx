@@ -3,12 +3,12 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { gradeCurricularService } from "../../services/gradeCurricularService"
-import type {
-  GradeCurricularDto,
-  CreateGradeCurricularDto,
-  UpdateGradeCurricularDto,
+import {
+  type GradeCurricularDto,
+  type CreateGradeCurricularDto,
+  type UpdateGradeCurricularDto,
+  tipoEnum,
 } from "../../types/gradeCurricular"
-import { tipoEnumCurso } from "../../types/curso"
 import "./GradeCurricularFormModal.css"
 
 interface GradeCurricularFormModalProps {
@@ -27,36 +27,46 @@ const GradeCurricularFormModal: React.FC<GradeCurricularFormModalProps> = ({
   const [formData, setFormData] = useState<CreateGradeCurricularDto | UpdateGradeCurricularDto>({
     titulo: "",
     codigo: "",
+    tipo_pos: tipoEnum.Mestrado,
     componente_curricular: "",
     carga_horaria: "",
     ementa: undefined,
-    tipo_pos: undefined,
+    data_criacao: new Date(),
   })
+
+  const [, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (gradeCurricular) {
       setFormData({
         titulo: gradeCurricular.titulo,
         codigo: gradeCurricular.codigo,
+        tipo_pos: gradeCurricular.tipo_pos,
         componente_curricular: gradeCurricular.componente_curricular,
         carga_horaria: gradeCurricular.carga_horaria,
-        tipo_pos: gradeCurricular.tipo_pos,
+        data_criacao: new Date(gradeCurricular.data_criacao),
+        ementa: undefined,
       })
     } else {
       setFormData({
         titulo: "",
         codigo: "",
+        tipo_pos: tipoEnum.Mestrado,
         componente_curricular: "",
         carga_horaria: "",
         ementa: undefined,
-        tipo_pos: undefined,
+        data_criacao: new Date(),
       })
     }
   }, [gradeCurricular])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (name === "data_criacao") {
+      setFormData((prev) => ({ ...prev, [name]: new Date(value) }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,34 +76,35 @@ const GradeCurricularFormModal: React.FC<GradeCurricularFormModalProps> = ({
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    setError(null);
     try {
-      const formDataToSend = new FormData()
+      const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         if (value !== undefined) {
           if (key === "ementa" && value instanceof File) {
-            formDataToSend.append(key, value)
+            formDataToSend.append(key, value);
+          } else if (key === "data_criacao" && value instanceof Date) {
+            formDataToSend.append(key, value.toISOString());
           } else {
-            formDataToSend.append(key, String(value))
+            formDataToSend.append(key, String(value));
           }
         }
-      })
-
-      // Adiciona a data de criação automaticamente
-      formDataToSend.append("data_criacao", new Date().toISOString())
+      });
 
       if (gradeCurricular) {
-        await gradeCurricularService.update(gradeCurricular.id, formDataToSend as unknown as UpdateGradeCurricularDto)
+        await gradeCurricularService.update(gradeCurricular.id, formDataToSend);
       } else {
-        await gradeCurricularService.create(formDataToSend as unknown as CreateGradeCurricularDto)
+        await gradeCurricularService.create(formDataToSend);
       }
-      onSubmitSuccess()
-      onClose()
+      onSubmitSuccess();
+      onClose();
     } catch (error) {
-      console.error("Erro ao salvar grade curricular:", error)
+      console.error("Erro ao salvar grade curricular:", error);
+      setError("Ocorreu um erro ao salvar a grade curricular. Por favor, tente novamente.");
     }
-  }
-
+  };
+  
   if (!isOpen) return null
 
   return (
@@ -134,13 +145,28 @@ const GradeCurricularFormModal: React.FC<GradeCurricularFormModalProps> = ({
           <div>
             <label htmlFor="tipo_pos">Tipo de Pós-Graduação:</label>
             <select id="tipo_pos" name="tipo_pos" value={formData.tipo_pos} onChange={handleChange} required>
-              <option value={tipoEnumCurso.Mestrado}>Mestrado</option>
-              <option value={tipoEnumCurso.Doutorado}>Doutorado</option>
+              <option value={tipoEnum.Mestrado}>Mestrado</option>
+              <option value={tipoEnum.Doutorado}>Doutorado</option>
             </select>
           </div>
           <div>
             <label htmlFor="ementa">Ementa:</label>
             <input type="file" id="ementa" name="ementa" onChange={handleFileChange} />
+          </div>
+          <div>
+            <label htmlFor="data_criacao">Data de Criação:</label>
+            <input
+              type="datatime-local"
+              id="data_criacao"
+              name="data_criacao"
+              value={
+                formData.data_criacao instanceof Date 
+                ? formData.data_criacao.toISOString().slice(0, 16)
+                : formData.data_criacao
+              }
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="modal-buttons">
             <button type="button" onClick={onClose}>

@@ -112,7 +112,7 @@ const AdminNoticias: React.FC = () => {
                 <button onClick={() => openViewModal(noticia)} className="btn-view">
                   Visualizar
                 </button>
-                <button onClick={() => openEditModal(noticia)} className="btn-edit">
+                <button disabled onClick={() => openEditModal(noticia)} className="btn-edit-disable">
                   Editar
                 </button>
                 <button onClick={() => handleDelete(noticia.id)} className="btn-delete">

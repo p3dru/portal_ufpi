@@ -17,7 +17,7 @@ import CursoForm from "./components/curso/CursoForm"
 import DocumentoList from "./components/documento/DocumentoList"
 import DocumentoForm from "./components/documento/DocumentoForm"
 import GradeCurricularList from "./components/gradeCurricular/GradeCurricularList"
-import GradeCurricularForm from "./components/gradeCurricular/GradeCurricularForm"
+//mport GradeCurricularForm from "./components/gradeCurricular/GradeCurricularForm"
 import TurmaList from "./components/turma/TurmaList"
 import TurmaForm from "./components/turma/TurmaForm"
 import DissertacaoTeseList from "./components/dissertacaoTese/DissertacaoTeseList"
@@ -40,7 +40,7 @@ import type { AlunoResponseDto, CreateAlunoDto, UpdateAlunoDto } from "./types/a
 import type { ProfessorResponseDto, CreateProfessorDto, UpdateProfessorDto } from "./types/professor"
 import type { CursoResponseDto, CreateCursoDto, UpdateCursoDto } from "./types/curso"
 import type { DocumentoResponseDto, CreateDocumentoDto, UpdateDocumentoDto } from "./types/documento"
-import type { GradeCurricularDto, CreateGradeCurricularDto, UpdateGradeCurricularDto } from "./types/gradeCurricular"
+//import type { GradeCurricularDto, CreateGradeCurricularDto, UpdateGradeCurricularDto } from "./types/gradeCurricular"
 import type { TurmaDto, CreateTurmaDto, UpdateTurmaDto } from "./types/turma"
 import type { DissertacaoTeseDto, CreateDissertacaoTeseDto, UpdateDissertacaoTeseDto } from "./types/dissertacaoTese"
 import type { CalendarioDto, CreateCalendarioDto, UpdateCalendarioDto } from "./types/calendario"
@@ -57,7 +57,7 @@ import { alunoService } from "./services/alunoService"
 import { professorService } from "./services/professorService"
 import { cursoService } from "./services/cursoService"
 import { documentoService } from "./services/documentoService"
-import { gradeCurricularService } from "./services/gradeCurricularService"
+//import { gradeCurricularService } from "./services/gradeCurricularService"
 import { turmaService } from "./services/turmaService"
 import { dissertacaoTeseService } from "./services/dissertacaoTeseService"
 import { calendarioService } from "./services/calendarioService"
@@ -372,6 +372,7 @@ function App() {
                       />
                     }
                   />
+                  {/*
                   <Route
                     path="/grade-curricular"
                     element={
@@ -387,7 +388,7 @@ function App() {
                         ]}
                       />
                     }
-                  />
+                  />*/}
                   <Route
                     path="/turmas"
                     element={
@@ -469,8 +470,8 @@ function App() {
                   <Route path="/curso/edit/:id" element={<CursoForm isEditing={true} />} />
                   <Route path="/documento/create" element={<DocumentoForm isEditing={false} />} />
                   <Route path="/documento/edit/:id" element={<DocumentoForm isEditing={true} />} />
-                  <Route path="/grade-curricular/create" element={<GradeCurricularForm isEditing={false} />} />
-                  <Route path="/grade-curricular/edit/:id" element={<GradeCurricularForm isEditing={true} />} />
+                  {/*<Route path="/grade-curricular/create" element={<GradeCurricularForm isEditing={false} />} />*/}
+                  {/*<Route path="/grade-curricular/edit/:id" element={<GradeCurricularForm isEditing={true} />} />*/}
                   <Route path="/turma/create" element={<TurmaForm isEditing={false} />} />
                   <Route path="/turma/edit/:id" element={<TurmaForm isEditing={true} />} />
                   <Route path="/dissertacao-tese/create" element={<DissertacaoTeseForm isEditing={false} />} />

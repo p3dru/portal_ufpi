@@ -115,7 +115,7 @@ const AdminDocumentos: React.FC = () => {
                 <button onClick={() => openViewModal(documento)} className="btn-view">
                   Visualizar
                 </button>
-                <button onClick={() => openEditModal(documento)} className="btn-edit">
+                <button disabled onClick={() => openEditModal(documento)} className="btn-edit-disable">
                   Editar
                 </button>
                 <button onClick={() => handleDelete(documento.id)} className="btn-delete">

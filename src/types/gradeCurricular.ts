@@ -9,7 +9,8 @@ export interface GradeCurricularDto {
     codigo: string
     tipo_pos: tipoEnum
     componente_curricular: string
-    ementa: any
+    //ementa: any
+    ementa?: string
     carga_horaria: string
     data_criacao: Date
   }

@@ -117,7 +117,7 @@ const AdminGradeCurricular: React.FC = () => {
                 <button onClick={() => openViewModal(gradeCurricular)} className="btn-view">
                   Visualizar
                 </button>
-                <button onClick={() => openEditModal(gradeCurricular)} className="btn-edit">
+                <button disabled onClick={() => openEditModal(gradeCurricular)} className="btn-edit-disable">
                   Editar
                 </button>
                 <button onClick={() => handleDelete(gradeCurricular.id)} className="btn-delete">
