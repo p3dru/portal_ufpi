@@ -44,7 +44,7 @@ export class DissertacoesTesesController {
           throw new BadRequestException('O arquivo excede o limite de 10 MB');
     }
     
-    createDissertacaoTeseDto.arquivo = file ? `uploads/dissertaces-tese/${file.filename}` : "Sem arquivo";
+    createDissertacaoTeseDto.arquivo = file ? `uploads/dissertacoes-tese/${file.filename}` : "Sem arquivo";
     
     return this.dissertacoesTesesService.create(createDissertacaoTeseDto);
   }
